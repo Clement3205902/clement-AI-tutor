@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME AI Tutor - Virginia Tech Mechanical Engineering</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/katex/0.16.9/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/katex/0.16.9/katex.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🎓 ME AI Tutor</h1>
+                <p class="subtitle">Virginia Tech Mechanical Engineering AI Assistant</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-tabs">
+        <div class="container">
+            <button class="tab-btn active" data-tab="chat">💬 AI Tutor Chat</button>
+            <button class="tab-btn" data-tab="subjects">📚 Subject Help</button>
+            <button class="tab-btn" data-tab="problems">🧮 Problem Solver</button>
+            <button class="tab-btn" data-tab="upload">📄 Upload & Analyze</button>
+            <button class="tab-btn" data-tab="curriculum">🎯 VT ME Curriculum</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- AI Tutor Chat Tab -->
+            <div class="tab-content active" id="chat-tab">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>Chat with Your ME AI Tutor</h2>
+                        <p>Ask questions about any mechanical engineering topic - I'm here to help you understand!</p>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message assistant-message">
+                            <div class="message-content">
+                                <strong>ME AI Tutor:</strong> Hello! I'm your mechanical engineering AI tutor, specialized in the Virginia Tech ME curriculum. I can help you with:
+                                <ul>
+                                    <li>📐 Statics and Dynamics</li>
+                                    <li>🌡️ Thermodynamics</li>
+                                    <li>💨 Fluid Mechanics</li>
+                                    <li>📊 Calculus and Math</li>
+                                    <li>⚛️ Physics</li>
+                                    <li>🔧 Design and Controls</li>
+                                    <li>And much more!</li>
+                                </ul>
+                                What would you like to learn about today?
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="input-group">
+                            <select id="contextSelect" class="context-select">
+                                <option value="">Select Subject Context (Optional)</option>
+                                <option value="Statics">Statics</option>
+                                <option value="Dynamics">Dynamics</option>
+                                <option value="Thermodynamics">Thermodynamics</option>
+                                <option value="Fluid Mechanics">Fluid Mechanics</option>
+                                <option value="Heat Transfer">Heat Transfer</option>
+                                <option value="Materials Engineering">Materials Engineering</option>
+                                <option value="Controls Engineering">Controls Engineering</option>
+                                <option value="Vibrations">Vibrations</option>
+                                <option value="Calculus">Calculus</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Linear Algebra">Linear Algebra</option>
+                                <option value="Differential Equations">Differential Equations</option>
+                            </select>
+                            <textarea id="chatInput" placeholder="Ask your question here... (e.g., 'Can you explain Newton's second law?' or 'How do I solve statics problems?')" rows="3"></textarea>
+                            <button id="sendBtn" class="send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Help Tab -->
+            <div class="tab-content" id="subjects-tab">
+                <div class="subject-help">
+                    <h2>Subject-Specific Help</h2>
+                    <p>Get comprehensive explanations for specific topics in your ME curriculum</p>
+                    
+                    <div class="subject-grid">
+                        <div class="subject-card" data-subject="Statics">
+                            <h3>📐 Statics</h3>
+                            <p>Equilibrium, free body diagrams, forces, moments, trusses, frames</p>
+                        </div>
+                        <div class="subject-card" data-subject="Dynamics">
+                            <h3>🏃 Dynamics</h3>
+                            <p>Kinematics, kinetics, Newton's laws, energy, momentum</p>
+                        </div>
+                        <div class="subject-card" data-subject="Thermodynamics">
+                            <h3>🌡️ Thermodynamics</h3>
+                            <p>Laws of thermodynamics, cycles, properties, processes</p>
+                        </div>
+                        <div class="subject-card" data-subject="Fluid Mechanics">
+                            <h3>💨 Fluid Mechanics</h3>
+                            <p>Fluid properties, flow analysis, Bernoulli's equation</p>
+                        </div>
+                        <div class="subject-card" data-subject="Heat Transfer">
+                            <h3>🔥 Heat Transfer</h3>
+                            <p>Conduction, convection, radiation, heat exchangers</p>
+                        </div>
+                        <div class="subject-card" data-subject="Materials Engineering">
+                            <h3>🔩 Materials</h3>
+                            <p>Material properties, stress-strain, mechanical behavior</p>
+                        </div>
+                        <div class="subject-card" data-subject="Controls Engineering">
+                            <h3>🎛️ Controls</h3>
+                            <p>System dynamics, feedback control, stability analysis</p>
+                        </div>
+                        <div class="subject-card" data-subject="Calculus">
+                            <h3>📊 Calculus</h3>
+                            <p>Derivatives, integrals, differential equations, series</p>
+                        </div>
+                    </div>
+
+                    <div class="topic-input-section" style="display: none;">
+                        <h3>Get Help with: <span id="selectedSubject"></span></h3>
+                        <div class="input-group">
+                            <input type="text" id="topicInput" placeholder="Enter specific topic (e.g., 'free body diagrams', 'Carnot cycle')">
+                            <select id="levelSelect">
+                                <option value="beginner">Beginner Level</option>
+                                <option value="intermediate">Intermediate Level</option>
+                                <option value="advanced">Advanced Level</option>
+                            </select>
+                            <button id="getHelpBtn" class="help-btn">Get Help</button>
+                        </div>
+                        <div id="subjectResponse" class="response-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem Solver Tab -->
+            <div class="tab-content" id="problems-tab">
+                <div class="problem-solver">
+                    <h2>Problem Solver</h2>
+                    <p>Get step-by-step solutions to engineering problems</p>
+                    
+                    <div class="solver-options">
+                        <button class="solver-btn active" data-mode="solve">Solve Problem</button>
+                        <button class="solver-btn" data-mode="check">Check My Work</button>
+                        <button class="solver-btn" data-mode="generate">Generate Practice Problems</button>
+                        <button class="solver-btn" data-mode="calculate">Calculator</button>
+                    </div>
+
+                    <!-- Solve Problem Mode -->
+                    <div class="solver-mode active" id="solve-mode">
+                        <h3>Problem Solver</h3>
+                        <div class="input-group">
+                            <select id="problemSubject" class="subject-select">
+                                <option value="">Select Subject</option>
+                                <option value="Statics">Statics</option>
+                                <option value="Dynamics">Dynamics</option>
+                                <option value="Thermodynamics">Thermodynamics</option>
+                                <option value="Fluid Mechanics">Fluid Mechanics</option>
+                                <option value="Heat Transfer">Heat Transfer</option>
+                                <option value="Materials">Materials Engineering</option>
+                                <option value="Controls">Controls Engineering</option>
+                                <option value="Calculus">Calculus</option>
+                                <option value="Physics">Physics</option>
+                            </select>
+                            <textarea id="problemInput" placeholder="Paste or type your engineering problem here..." rows="6"></textarea>
+                            <button id="solveBtn" class="action-btn">Solve Problem</button>
+                        </div>
+                        <div id="solutionResponse" class="response-container"></div>
+                    </div>
+
+                    <!-- Check Work Mode -->
+                    <div class="solver-mode" id="check-mode">
+                        <h3>Check Your Work</h3>
+                        <div class="input-group">
+                            <textarea id="originalProblem" placeholder="Original problem..." rows="3"></textarea>
+                            <textarea id="studentSolution" placeholder="Your solution/work..." rows="6"></textarea>
+                            <input type="text" id="correctAnswer" placeholder="Known correct answer (optional)">
+                            <button id="checkBtn" class="action-btn">Check My Work</button>
+                        </div>
+                        <div id="checkResponse" class="response-container"></div>
+                    </div>
+
+                    <!-- Generate Problems Mode -->
+                    <div class="solver-mode" id="generate-mode">
+                        <h3>Practice Problem Generator</h3>
+                        <div class="input-group">
+                            <select id="genSubject" class="subject-select">
+                                <option value="">Select Subject</option>
+                                <option value="Statics">Statics</option>
+                                <option value="Dynamics">Dynamics</option>
+                                <option value="Thermodynamics">Thermodynamics</option>
+                                <option value="Fluid Mechanics">Fluid Mechanics</option>
+                                <option value="Heat Transfer">Heat Transfer</option>
+                                <option value="Materials">Materials Engineering</option>
+                                <option value="Controls">Controls Engineering</option>
+                                <option value="Calculus">Calculus</option>
+                            </select>
+                            <input type="text" id="genTopic" placeholder="Specific topic (e.g., 'beam analysis', 'projectile motion')">
+                            <select id="genDifficulty">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                            <select id="genCount">
+                                <option value="3">3 Problems</option>
+                                <option value="5">5 Problems</option>
+                                <option value="10">10 Problems</option>
+                            </select>
+                            <button id="generateBtn" class="action-btn">Generate Problems</button>
+                        </div>
+                        <div id="generateResponse" class="response-container"></div>
+                    </div>
+
+                    <!-- Calculator Mode -->
+                    <div class="solver-mode" id="calculate-mode">
+                        <h3>Engineering Calculator</h3>
+                        <div class="input-group">
+                            <input type="text" id="mathExpression" placeholder="Enter mathematical expression (e.g., sin(pi/4) + log(10))">
+                            <textarea id="calcContext" placeholder="Context (optional): What is this calculation for?" rows="2"></textarea>
+                            <button id="calculateBtn" class="action-btn">Calculate</button>
+                        </div>
+                        <div id="calcResponse" class="response-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload & Analyze Tab -->
+            <div class="tab-content" id="upload-tab">
+                <div class="upload-section">
+                    <h2>Upload & Analyze</h2>
+                    <p>Upload lecture notes, videos, PDFs, or images for AI analysis and explanation</p>
+                    
+                    <div class="upload-container">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop files here or click to browse</p>
+                            <p class="file-types">Supported: PDF, Images, Videos, Audio, Text files</p>
+                            <input type="file" id="fileInput" accept=".pdf,.txt,.doc,.docx,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mp3,.wav" style="display: none;">
+                        </div>
+                        
+                        <div class="upload-options" style="display: none;">
+                            <h3>File Processing Options</h3>
+                            <div class="input-group">
+                                <select id="fileSubject">
+                                    <option value="">Select Subject (Optional)</option>
+                                    <option value="Statics">Statics</option>
+                                    <option value="Dynamics">Dynamics</option>
+                                    <option value="Thermodynamics">Thermodynamics</option>
+                                    <option value="Fluid Mechanics">Fluid Mechanics</option>
+                                    <option value="Heat Transfer">Heat Transfer</option>
+                                    <option value="Materials">Materials Engineering</option>
+                                    <option value="Controls">Controls Engineering</option>
+                                    <option value="Calculus">Calculus</option>
+                                    <option value="Physics">Physics</option>
+                                </select>
+                                <input type="text" id="fileContext" placeholder="Additional context (optional)">
+                                <button id="analyzeBtn" class="action-btn">Analyze Content</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="uploadStatus" class="status-container"></div>
+                    <div id="fileAnalysis" class="response-container"></div>
+                </div>
+            </div>
+
+            <!-- VT ME Curriculum Tab -->
+            <div class="tab-content" id="curriculum-tab">
+                <div class="curriculum-info">
+                    <h2>Virginia Tech ME Curriculum Guide</h2>
+                    <p>Your complete guide to the Mechanical Engineering program at Virginia Tech</p>
+                    
+                    <div class="curriculum-overview">
+                        <div class="curriculum-stats">
+                            <div class="stat-card">
+                                <h3>128</h3>
+                                <p>Total Credit Hours</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>39</h3>
+                                <p>Major Requirements</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>15</h3>
+                                <p>Technical Electives</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>2.0</h3>
+                                <p>Min GPA Required</p>
+                            </div>
+                        </div>
+
+                        <div class="curriculum-sections">
+                            <div class="curriculum-section">
+                                <h3>📚 Core Degree Requirements (21 credits)</h3>
+                                <ul>
+                                    <li>ME 2004: Engineering Analysis Using Numerical Methods (3 cr)</li>
+                                    <li>ME 3304: Heat and Mass Transfer (3 cr)</li>
+                                    <li>ME 3414: Fluid Dynamics w/ lab (4 cr)</li>
+                                    <li>ME 3534: Controls Engineering I w/ lab (4 cr)</li>
+                                    <li>ME 3624: Mechanical Design w/ lab (4 cr)</li>
+                                    <li>ME 4005: Mechanical Engineering Lab (3 cr)</li>
+                                </ul>
+                            </div>
+
+                            <div class="curriculum-section">
+                                <h3>🔧 Major Requirements (39 credits)</h3>
+                                <ul>
+                                    <li>Thermodynamics</li>
+                                    <li>Engineering Design and Economics</li>
+                                    <li>Mechanical Vibrations</li>
+                                    <li>Chemistry, Electrical Theory</li>
+                                    <li>Statics, Dynamics</li>
+                                    <li>Materials Engineering</li>
+                                    <li>Statistics</li>
+                                </ul>
+                            </div>
+
+                            <div class="curriculum-section">
+                                <h3>📊 Mathematics & Sciences</h3>
+                                <ul>
+                                    <li>Calculus I, II, III</li>
+                                    <li>Differential Equations</li>
+                                    <li>Linear Algebra</li>
+                                    <li>Physics I, II (Mechanics, E&M)</li>
+                                    <li>Chemistry</li>
+                                    <li>Statistics</li>
+                                </ul>
+                            </div>
+
+                            <div class="curriculum-section">
+                                <h3>🎯 Key Requirements</h3>
+                                <ul>
+                                    <li><strong>Career Bridge Experience:</strong> Senior Design, Internships, Co-ops, or Research</li>
+                                    <li><strong>Senior Design:</strong> Year-long capstone project (ME4015/4016)</li>
+                                    <li><strong>Foreign Language:</strong> 2 years high school or 1 year college</li>
+                                    <li><strong>Technical Electives:</strong> 15 credits (minimum 12 from approved list)</li>
+                                </ul>
+                            </div>
+
+                            <div class="curriculum-section">
+                                <h3>🗓️ Study Tips</h3>
+                                <ul>
+                                    <li>Work closely with ME advisors for proper course sequencing</li>
+                                    <li>Senior courses are only offered once per year</li>
+                                    <li>Maintain minimum 2.0 overall and in-major GPA</li>
+                                    <li>Consider internships and co-ops for career bridge experience</li>
+                                    <li>Plan technical electives around your interests and career goals</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Processing your request...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
